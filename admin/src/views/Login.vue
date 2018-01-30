@@ -28,7 +28,8 @@
 </template>
 
 <script>
-import axios from 'axios';
+import {login} from '@/api';
+import { mapActions } from 'vuex';
 export default {
   data () {
     return {
@@ -39,15 +40,17 @@ export default {
     }
   },
   methods: {
-    login() {
-        axios.post('/users',{
-          username:this.username,
-          password:this.password
-        }).then((response)=>{
-           let res = response.data;
-           console.log(res);
-        })
-    }
+    ...mapActions(['createToken']),
+      async login() {
+        try {
+            await this.createToken({
+              username: this.username,
+              password: this.password
+            });
+        } catch (error) {
+           console.log(error)
+        }
+      }
   }
 }
 </script>
