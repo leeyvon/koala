@@ -1,5 +1,6 @@
 const state = {
-    token: sessionStorage.getItem('token')
+    token: sessionStorage.getItem('token'),
+    isCollapse: false
 }
 
 export default state
