@@ -48,7 +48,6 @@ import { mapState } from 'vuex';
    top: 0;
    bottom: 0;
    left: 0;
-   z-index: 100;
    background-color: #314156;
 }
 .hide-sidebar{

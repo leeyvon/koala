@@ -1,23 +1,24 @@
 <template>
-  <div>
+  <div>  
     <Sidebar></Sidebar>
-    <navbar></navbar>
+    <main-container></main-container>
   </div>
 </template>
 
 <script>
 import Sidebar from '@/components/Sidebar'
-import Navbar from '@/components/navbar'
+import MainContainer from '@/components/MainContainer'
 
 export default {
    components:{
      Sidebar,
-     Navbar
+     MainContainer
    }
 }
 </script>
 
 <style lang="scss">
+
 </style>
 
 
