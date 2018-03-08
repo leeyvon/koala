@@ -9,3 +9,13 @@ export async function createToken (store, {username, password}) {
         router.replace('drafts')
     }
 }
+
+export async function createDraft (store, {title, imageSrc, content}) {
+    const {data} = await api.createDraft(title, imageSrc, content);
+    return data;
+}
+
+export async function getDraftList (store) {
+    const { data } = await api.draftList();
+    return data;
+} 

@@ -3,7 +3,7 @@
       <el-input style="margin-bottom:10px;" v-model="title" placeholder="请输入标题"></el-input>
       <el-input style="margin-bottom:10px;" v-model="imgSrc" placeholder="图片地址"></el-input>
       <textarea id="editor"></textarea>
-      <el-button style="float:right;margin-top:10px;" type="primary">publish</el-button>
+      <el-button style="float:right;margin-top:10px;" type="primary" @click="addDraft()">ADD</el-button>
   </div>
 </template>
 <script>
@@ -11,12 +11,14 @@ import 'font-awesome/css/font-awesome.min.css'
 import 'simplemde/dist/simplemde.min.css'
 import SimpleMDE from 'simplemde' 
 import md2html from '@/markdown'
+import { mapActions } from 'vuex'
 export default {
     data() {
         return {
             simplemde: null,
             title: null,
-            imgSrc: null
+            imgSrc: null,
+            content: null
         }
     },
     mounted() {
@@ -37,7 +39,28 @@ export default {
             link: ['[', ']( )']
         },
         // hideIcons: ['guide', 'heading', 'quote', 'image', 'preview', 'side-by-side', 'fullscreen']
+        });
+        // 保存article
+        this.simplemde.codemirror.on("change", ()=>{
+            this.content = this.simplemde.value();
         })
+    },
+    methods:{
+        ...mapActions(['createDraft']),
+        async addDraft() {
+            if(!this.title){
+                this.$message({
+                    message: '请填写标题',
+                    type: 'warning'
+                });
+                return;
+            };
+           const {data} = await this.createDraft({
+               title: this.title,
+               imageSrc: this.imageSrc,
+               content: this.content
+           })
+        }
     }
 }
 </script>

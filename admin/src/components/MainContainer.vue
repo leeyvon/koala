@@ -1,7 +1,10 @@
 <template>
   <div class="main-container" :class="{ 'hide-sidebar': isCollapse }">
       <navbar></navbar>
-      <draft-editor></draft-editor>
+      <transition name="fade" mode="out-in">
+          <router-view></router-view>
+      </transition>
+      <!-- <draft-editor></draft-editor> -->
   </div>
 </template>
 <script>

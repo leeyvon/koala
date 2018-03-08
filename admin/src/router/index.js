@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Login from '@/views/Login'
-import Drafts from '@/views/Drafts'
+import DraftEditor from '@/components/DraftEditor'
+import ListTable from '@/components/ListTable'
+import Layout from '@/views/Layout'
 
 Vue.use(Router)
 
@@ -16,7 +18,25 @@ export default new Router({
     {
       path: '/drafts',
       name: 'Drafts',
-      component: Drafts
+      component: Layout,
+      redirect:'/drafts/newDraft',
+      children: [{
+        path: 'newDraft',
+        component: DraftEditor
+      },{
+        path: 'post/:id',
+        component :DraftEditor
+      }]
+    },
+    {
+      path: '/list',
+      name: 'List',
+      component: Layout,
+      redirect:'/list/index',
+      children: [{
+        path:'index',
+        component: ListTable
+      }]
     }
   ]
 })
