@@ -16,6 +16,17 @@ export async function createDraft (store, {title, imageSrc, content}) {
 }
 
 export async function getDraftList (store) {
-    const { data } = await api.draftList();
+    const {data} = await api.draftList();
     return data;
 } 
+
+export async function getDraft (store, id) {
+    const {data} = await api.getDraft(id);
+    return data;
+}
+
+export async function deleteDraft (store, id) {
+    const {data} = await api.deleteDraft(id);
+    console.log(data)
+    return data;
+}

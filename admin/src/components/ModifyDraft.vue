@@ -1,9 +1,9 @@
 <template>
   <div class="editor-container">
       <el-input style="margin-bottom:10px;" v-model="title" placeholder="请输入标题"></el-input>
-      <el-input style="margin-bottom:10px;" v-model="imageSrc" placeholder="图片地址"></el-input>
+      <el-input style="margin-bottom:10px;" v-model="imgSrc" placeholder="图片地址"></el-input>
       <textarea id="editor"></textarea>
-      <el-button style="float:right;margin-top:10px;" type="primary" @click="addDraft()">添加</el-button>
+      <el-button style="float:right;margin-top:10px;" type="primary" @click="modifyDraft()">修改</el-button>
   </div>
 </template>
 <script>
@@ -17,11 +17,16 @@ export default {
         return {
             simplemde: null,
             title: null,
-            imageSrc: null,
+            imgSrc: null,
             content: null
         }
     },
-    mounted() {
+    async mounted() {
+
+    const { data }  = await this.getDraft(this.$route.params.id);
+    this.title = data.title;
+    this.imgSrc = data.imageSrc;
+    
     this.simplemde = new SimpleMDE({
         element: document.getElementById('editor'),
         previewRender: str => md2html(str),
@@ -44,10 +49,11 @@ export default {
         this.simplemde.codemirror.on("change", ()=>{
             this.content = this.simplemde.value();
         })
+        this.simplemde.value(data.content);
     },
     methods:{
-        ...mapActions(['createDraft']),
-        async addDraft() {
+         ...mapActions(['getDraft']),
+        async modifyDraft() {
             if(!this.title){
                 this.$message({
                     message: '请填写标题',
@@ -55,33 +61,6 @@ export default {
                 });
                 return;
             };
-            this.$confirm('确定添加吗?', '提示', {
-            confirmButtonText: '确定',
-            cancelButtonText: '取消',
-            type: 'info'
-            }).then(async () => {
-                const data = await this.createDraft({
-                    title: this.title,
-                    imageSrc: this.imageSrc,
-                    content: this.content
-                })
-                if(data.success){
-                    this.$message({
-                        type: 'success',
-                        message: '添加成功!'
-                    });
-                }else{
-                    this.$message({
-                        type: 'error',
-                        message: '添加失败!'
-                    });
-                }           
-            }).catch(() => {
-                this.$message({
-                    type: 'info',
-                    message: '已取消'
-                });          
-            });
         }
     }
 }

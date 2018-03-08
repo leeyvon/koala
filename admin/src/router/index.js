@@ -4,6 +4,7 @@ import Login from '@/views/Login'
 import DraftEditor from '@/components/DraftEditor'
 import ListTable from '@/components/ListTable'
 import Layout from '@/views/Layout'
+import ModifyDraft from '@/components/ModifyDraft'
 
 Vue.use(Router)
 
@@ -25,7 +26,7 @@ export default new Router({
         component: DraftEditor
       },{
         path: 'post/:id',
-        component :DraftEditor
+        component :ModifyDraft
       }]
     },
     {

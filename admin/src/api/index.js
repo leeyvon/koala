@@ -10,5 +10,12 @@ export default {
     },
     async draftList () {
         return await instance.get('/api/drafts')
+    },
+    async getDraft (id) {
+        return await instance.get(`/api/drafts/${id}`)
+    },
+    async deleteDraft (id) {
+        return await instance.delete(`/api/drafts/${id}`)
     }  
+
 }
