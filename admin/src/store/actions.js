@@ -27,6 +27,15 @@ export async function getDraft (store, id) {
 
 export async function deleteDraft (store, id) {
     const {data} = await api.deleteDraft(id);
-    console.log(data)
+    return data;
+}
+
+export async function modifyDraft (store ,{id, modifyOpt}) {
+    const {data} = await api.modifyDraft(id, modifyOpt);
+    return data;
+}
+
+export async function publication (store, id) {
+    const {data} = await api.publish(id);
     return data;
 }

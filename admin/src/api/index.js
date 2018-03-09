@@ -16,6 +16,11 @@ export default {
     },
     async deleteDraft (id) {
         return await instance.delete(`/api/drafts/${id}`)
-    }  
-
+    },
+    async modifyDraft (id, modifyOpt) {
+        return await instance.patch(`/api/drafts/${id}`, {modifyOpt})
+    },
+    async publish (id) {
+        return await instance.post('/api/publication', {id})
+    }
 }

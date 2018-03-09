@@ -15,14 +15,15 @@
             </el-table-column>
             <el-table-column align="center" label="状态">
                  <template slot-scope="scope">
-                    <el-tag v-if="scope.row.published === 'true'" type="success">published</el-tag>
+                    <el-tag v-if="scope.row.published == true" type="success">published</el-tag>
                     <el-tag v-else type="warning">unpublished</el-tag>
                 </template>
             </el-table-column>
             <el-table-column align="center" label="操作">
                  <template slot-scope="scope">
                     <el-button type="primary" size="mini" @click="modify(scope.row._id)">编辑</el-button>
-                    <el-button size="mini" type="success">发布</el-button>
+                    <el-button v-if="scope.row.published == false" size="mini" type="success" @click="pub(scope.row._id)">发布</el-button>
+                    <el-button v-else size="mini" type="warning" @click="deletePub(scope.row._id)">撤销</el-button>
                     <el-button size="mini" type="danger" @click="draftDelete(scope.row._id)">删除</el-button>
                 </template>
             </el-table-column>
@@ -39,11 +40,14 @@ export default {
        }
    },
    async mounted() {
-      const {data} = await this.getDraftList();
-      this.list = data;
+       this.init()
    },
    methods: {
-       ...mapActions(['getDraftList','deleteDraft']),
+       ...mapActions(['getDraftList','deleteDraft','publication']),
+        async init() {
+            const {data} = await this.getDraftList();
+            this.list = data;
+        },
         modify(id) {
             this.$router.push({
                 path:`/drafts/post/${id}`
@@ -61,7 +65,7 @@ export default {
                         type: 'success',
                         message: '删除成功!'
                     });
-                    this.list = data.data;
+                    this.init();
                 }else{
                     this.$message({
                         type: 'error',
@@ -74,6 +78,36 @@ export default {
                     message: '删除失败'
                 });          
             });
+        },
+        async pub (id) {
+            this.$confirm('确定发布吗?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'warning'
+            }).then(async () => {
+                console.log(id)
+                const data = await this.publication(id);
+                if(data.success){
+                    this.$message({
+                        type: 'success',
+                        message: '发布成功!'
+                    });
+                    this.init();
+                }else{
+                    this.$message({
+                        type: 'error',
+                        message: '发布失败!'
+                    });
+                }           
+            }).catch(() => {
+                this.$message({
+                    type: 'error',
+                    message: '已取消'
+                });          
+            });
+        },
+        deletePub (){
+
         }
    }
 }

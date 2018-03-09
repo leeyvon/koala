@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-const draftSchema = new mongoose.Schema({
+const postSchema = mongoose.Schema({
     title: String,
     imageSrc: String,
     createTime: {
@@ -11,11 +11,7 @@ const draftSchema = new mongoose.Schema({
         default: Date.now
     },
     content: String,
-    published: Boolean,
-    post: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'post'
-    }
+    excerpt: String
 })
 
-module.exports = mongoose.model('draft', draftSchema);
+module.exports = mongoose.model('post', postSchema);

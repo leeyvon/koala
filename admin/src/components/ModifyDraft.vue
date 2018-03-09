@@ -1,9 +1,9 @@
 <template>
   <div class="editor-container">
       <el-input style="margin-bottom:10px;" v-model="title" placeholder="请输入标题"></el-input>
-      <el-input style="margin-bottom:10px;" v-model="imgSrc" placeholder="图片地址"></el-input>
+      <el-input style="margin-bottom:10px;" v-model="imageSrc" placeholder="图片地址"></el-input>
       <textarea id="editor"></textarea>
-      <el-button style="float:right;margin-top:10px;" type="primary" @click="modifyDraft()">修改</el-button>
+      <el-button style="float:right;margin-top:10px;" type="primary" @click="modify()">修改</el-button>
   </div>
 </template>
 <script>
@@ -17,7 +17,7 @@ export default {
         return {
             simplemde: null,
             title: null,
-            imgSrc: null,
+            imageSrc: null,
             content: null
         }
     },
@@ -52,8 +52,8 @@ export default {
         this.simplemde.value(data.content);
     },
     methods:{
-         ...mapActions(['getDraft']),
-        async modifyDraft() {
+         ...mapActions(['getDraft','modifyDraft']),
+        async modify() {
             if(!this.title){
                 this.$message({
                     message: '请填写标题',
@@ -61,6 +61,37 @@ export default {
                 });
                 return;
             };
+            this.$confirm('确定修改吗?', '提示', {
+            confirmButtonText: '确定',
+            cancelButtonText: '取消',
+            type: 'info'
+            }).then(async () => {
+                const data = await this.modifyDraft({
+                    id: this.$route.params.id,
+                    modifyOpt:{
+                        title: this.title,
+                        imageSrc: this.imageSrc,
+                        content: this.content
+                    }    
+                })
+                if(data.success){
+                    this.$message({
+                        type: 'success',
+                        message: '修改成功!'
+                    });
+                }else{
+                    this.$message({
+                        type: 'error',
+                        message: '修改失败!'
+                    });
+                }           
+            }).catch(() => {
+                this.$message({
+                    type: 'info',
+                    message: '已取消'
+                });          
+            });
+            
         }
     }
 }

@@ -1,15 +1,14 @@
 let Draft = require('./../models/draft');
+let Post = require('./../models/post');
 const base = require('./../token');
-const moment = require('moment');
-const timezone = 'Asia/Shanghai';
 
 module.exports = {
     async create(ctx, next) {
         const { title, imageSrc, content } = ctx.request.body;
-        console.log(imageSrc)
         const createTime = new Date();
         const lastEditTime = new Date();
         const published = false;
+        const post = null;
         !title && ctx.throw(400, 'Title Required');
         let draft = new Draft({
             title,
@@ -17,7 +16,8 @@ module.exports = {
             lastEditTime,
             published,
             content,
-            imageSrc
+            imageSrc,
+            post
         });
         await draft.save().catch(err => {
             throw new Error('token saved failed');
@@ -28,11 +28,25 @@ module.exports = {
         }
     },
     async modify(ctx, next) {
-        
+        const id = ctx.params.id;
+        const {modifyOpt} = ctx.request.body;
+        if(modifyOpt.content) {
+            const contentArr = modifyOpt.content.split('<!-- more -->');
+            modifyOpt.excerpt = contentArr.length > 1 ? contentArr[0] : '';
+        }
+        modifyOpt.lastEditTime = new Date();
+        modifyOpt.published = false;
+        let result = await Draft.findByIdAndUpdate(id, {$set: modifyOpt}, {new: true}).exec().catch(err =>{
+            throw new Error('modify draft failed');
+        })
+        ctx.body = {
+            success: true,
+            data: result
+        }
     },
     async draftList(ctx, next) {
         let findOpt = {};
-        const draftArr = await Draft.find(findOpt).exec();
+        const draftArr = await Draft.find(findOpt).sort('_id').exec();
         ctx.body = {
             success: true,
             data: draftArr.reverse()
@@ -57,10 +71,13 @@ module.exports = {
         await draft.remove().catch(err=> {
             throw new Error('draft delete failed');
         })
-        const draftArr = await Draft.find({}).exec();
+        if(draft.post){
+        await Post.remove({_id:draft.post}).catch(err=>{
+                throw new Error('already post saved failed');
+            })
+        }
         ctx.body = {
-            success: true,
-            data: draftArr
+            success: true
         }
     }
 }
