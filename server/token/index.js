@@ -6,7 +6,7 @@ function createToken(user) {
         id: user._id,
         name: user.name
     }, 'leeyvon', {
-        expiresIn: Math.floor(Date.now()/1000) + 24 * 60 * 60 //过期时间设置为60妙。那么decode这个token的时候得到的过期时间为 : 创建token的时间 +　设置的值
+        expiresIn: Math.floor(Date.now()/1000) + 10 //过期时间设置为60妙。那么decode这个token的时候得到的过期时间为 : 创建token的时间 +　设置的值
     })
     return token
 }
@@ -17,7 +17,8 @@ async function checkToken(ctx, next) {
         let token = ctx.request.header['authorization'].split(' ')[1];
         //解码token
         let decoded = jwt.decode(token, 'leeyvon');
-        if(token && decoded.exp <= new Date()/1000){
+        console.log(decoded.exp, new Date()/1000)
+        if(token && decoded.exp <= Date.now()/1000){
             ctx.status = 401;
             ctx.body = {
                 message: 'token过期'

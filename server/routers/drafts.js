@@ -3,10 +3,10 @@ const controller = require('./../controllers/drafts');
 const token = require('./../token');
 
 const routers = router
-  .post('/', controller.create)
-  .patch('/:id', controller.modify)
-  .get('/', controller.draftList)
-  .get('/:id', controller.draftDetail)
-  .delete('/:id', controller.deleteDraft)
+  .post('/',token.checkToken, controller.create)
+  .patch('/:id',token.checkToken, controller.modify)
+  .get('/',token.checkToken, controller.draftList)
+  .get('/:id',token.checkToken, controller.draftDetail)
+  .delete('/:id',token.checkToken, controller.deleteDraft)
 
 module.exports = routers

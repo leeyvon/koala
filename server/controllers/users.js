@@ -19,9 +19,9 @@ module.exports = {
             user.token = token;
             console.log(token)
             console.log(jwt.decode(token,'leeyvon'))
-            await user.save().catch(err =>{
-                throw new Error('token saved failed');
-            })
+            // await user.save().catch(err =>{
+            //     throw new Error('token saved failed');
+            // })
             ctx.body = {
                 status: '0',
                 msg: '登陆成功！',

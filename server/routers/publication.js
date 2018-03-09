@@ -3,6 +3,6 @@ const controller = require('./../controllers/publication');
 const token = require('./../token');
 
 const routers = router
-  .post('/', controller.publish)
+  .post('/',token.checkToken,controller.publish)
 
 module.exports = routers
