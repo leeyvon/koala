@@ -1,6 +1,5 @@
 let Draft = require('./../models/draft');
 let Post = require('./../models/post');
-const base = require('./../token');
 
 module.exports = {
     async create(ctx, next) {

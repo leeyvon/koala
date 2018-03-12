@@ -5,8 +5,8 @@ function createToken(user) {
     const token = jwt.sign({
         id: user._id,
         name: user.name
-    }, 'leeyvon', {
-        expiresIn: Math.floor(Date.now()/1000) + 10 //过期时间设置为60妙。那么decode这个token的时候得到的过期时间为 : 创建token的时间 +　设置的值
+    }, 'liyuanfeng', {
+        expiresIn: 60*60
     })
     return token
 }
@@ -16,21 +16,23 @@ async function checkToken(ctx, next) {
     if(ctx.request.header['authorization']){
         let token = ctx.request.header['authorization'].split(' ')[1];
         //解码token
-        let decoded = jwt.decode(token, 'leeyvon');
-        console.log(decoded.exp, new Date()/1000)
-        if(token && decoded.exp <= Date.now()/1000){
+        let decoded = jwt.decode(token, 'liyuanfeng');
+        let tokenContent
+        try{
+            tokenContent = await jwt.verify(token, 'liyuanfeng')
+        }catch(err){
             ctx.status = 401;
+            if (err.name === 'TokenExpiredError') {
+                console.log(123)
+                ctx.body = {
+                    message: 'token过期'
+                };
+            }
             ctx.body = {
-                message: 'token过期'
-            };
-        }else{
-            return next();
+                message: '没有token'
+            }
         }
-    }else{
-        ctx.status = 401;
-        ctx.body = {
-            message: '没有token'
-        }
+        return await next();
     }
 }
 
