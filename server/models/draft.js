@@ -1,21 +1,21 @@
-var mongoose = require('mongoose');
+var mongoose = require("mongoose");
 
 const draftSchema = new mongoose.Schema({
-    title: String,
-    imageSrc: String,
-    createTime: {
-        type: Date
-    },
-    lastEditTime: {
-        type: Date,
-        default: Date.now
-    },
-    content: String,
-    published: Boolean,
-    post: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'post'
-    }
-})
+  title: String,
+  imageSrc: String,
+  createTime: {
+    type: Date
+  },
+  lastEditTime: {
+    type: Date,
+    default: Date.now
+  },
+  content: String,
+  published: Boolean,
+  post: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "post"
+  }
+});
 
-module.exports = mongoose.model('draft', draftSchema);
+module.exports = mongoose.model("draft", draftSchema);
