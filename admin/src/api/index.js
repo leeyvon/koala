@@ -22,5 +22,8 @@ export default {
     },
     async publish (id) {
         return await instance.post('/api/publication', {id})
+    },
+    async deletePub (id) {
+        return await instance.delete(`/api/publication/${id}`)
     }
 }

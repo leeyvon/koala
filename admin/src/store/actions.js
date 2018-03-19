@@ -43,3 +43,8 @@ export async function publication (store, id) {
     const {data} = await api.publish(id);
     return data;
 }
+
+export async function deletePub (store, id) {
+    const {data} = await api.deletePub(id);
+    return data;
+}

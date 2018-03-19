@@ -9,7 +9,7 @@ function createToken(user) {
     },
     "liyuanfeng",
     {
-      expiresIn: 60 * 60
+      expiresIn: '2 days'
     }
   );
   return token;
@@ -27,7 +27,6 @@ async function checkToken(ctx, next) {
     } catch (err) {
       ctx.status = 401;
       if (err.name === "TokenExpiredError") {
-        console.log(123);
         ctx.body = {
           message: "token过期"
         };
