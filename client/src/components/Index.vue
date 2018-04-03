@@ -3,7 +3,7 @@
         <div id="screen">
             <div id="mark">
                 <div class="layer" data-depth="0.4">
-                    <img id="cover" crossorigin="anonymous" src="./../assets/wallhaven.jpeg" width="1920" height="1080"/>
+                    <img @load="imageLoaded" id="cover" crossorigin="anonymous" src="./../assets/wallhaven.jpeg" width="1920" height="1080"/>
                 </div>
             </div>
 
@@ -112,8 +112,19 @@ export default {
                 left: (_width - parseInt(id.width())) / 2 +'px',
                 top: (_height - parseInt(id.height())) / 2 +'px'
             })
+        },
+        imageLoaded() {
+            var cover = document.getElementById('cover');
+            var vibrant = new Vibrant(cover);
+            var swatches = vibrant.swatches();
+            if (swatches['DarkMuted']) {
+                $('#vibrant polygon').css('fill', swatches['DarkMuted'].getHex())
+                $('#vibrant div').css('background-color', swatches['DarkMuted'].getHex())
+            }
+            if (swatches['Vibrant']) {
+                $('.icon-menu').css('color', swatches['Vibrant'].getHex())
+            }
         }
-
   },
   components:{
     Posts
