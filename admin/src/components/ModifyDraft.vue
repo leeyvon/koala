@@ -25,7 +25,7 @@ export default {
 
     const { data }  = await this.getDraft(this.$route.params.id);
     this.title = data.title;
-    this.imgSrc = data.imageSrc;
+    this.imageSrc = data.imageSrc;
     
     this.simplemde = new SimpleMDE({
         element: document.getElementById('editor'),

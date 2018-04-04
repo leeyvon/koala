@@ -44,6 +44,18 @@ module.exports = {
       .catch(err => {
         throw new Error("modify draft failed");
       });
+      let draft = await Draft.findById(id)
+      .exec()
+      .catch(err => {
+        throw new Error("draft get failed");
+      });
+    await Post.remove({ _id: draft.post }).catch(err => {
+      throw new Error("already post saved failed");
+    });
+    draft.post = undefined; //删除post字段
+    draft.save().catch(err => {
+      throw new Error("draft saved failed");
+    });
     ctx.body = {
       success: true,
       data: result
