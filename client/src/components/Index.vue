@@ -22,13 +22,12 @@
 
             <div id="header">
             <div>
-                <!-- <a class="<?php if (LOGO_FONT) { echo 'icon-logo'; } else { echo 'image-logo'; } ?>" href="/"></a> -->
                 <div @click="toggleMenu" class="icon-menu switchmenu"></div>
             </div>
             </div>
             <div id="post0">
                 <p>{{moment(topLine.lastEditTime).format('MMMM Do YYYY')}}</p>
-                <h2><a class="posttitle" href="javascript:void(0)">{{topLine.title}}</a></h2>
+                <h2 class="posttitle" @click="goDetails(topLine._id)">{{topLine.title}}</h2>
                 <p class="p-content">{{topLine.excerpt}}</p>
             </div>
         </div>
@@ -130,13 +129,18 @@ export default {
         toggleMenu() {
             $('html, body').toggleClass('mu');
         },
-        getList(){
+        getList() {
             axios.get('/api/posts').then((response)=>{
                 let res = response.data;
                 if(res.success){
                     this.list = res.data.slice(1);
                     this.topLine = res.data[0];
                 }
+            })
+        },
+        goDetails(id) {
+            this.$router.push({
+                path:`/${id}`
             })
         }
   },
@@ -152,5 +156,9 @@ export default {
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 4;
     overflow: hidden;
+}
+.posttitle{
+    color: #fff;
+    cursor: pointer;
 }
 </style>

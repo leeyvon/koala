@@ -1,19 +1,34 @@
 <template>
 <div class="details">
     <div class="article-wrapper">
-        <h1 class="title">123123</h1>
+        <h1 class="title">{{article.title}}</h1>
         <div class="content">
-            <p>123123</p>
+            <p v-html="markdown(article.content+'')"></p>
         </div>	    
     </div>
 </div>
 </template>
 
 <script>
+import axios from 'axios';
+import marked from 'marked';
 export default {
+  mounted() {
+      this.getArticle();
+  },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      article:''
+    }
+  },
+  methods: {
+    getArticle() {
+        axios.get(`/api/posts/${this.$route.params.id}`).then((response)=>{
+            let res = response.data;
+            if(res.success){
+                this.article = res.data;
+            }
+        })
     }
   }
 }

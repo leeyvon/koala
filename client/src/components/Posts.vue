@@ -6,7 +6,7 @@
       </a>
       <div class="else">
           <p>{{moment(item.lastEditTime).format('MMMM Do YYYY')}}</p>
-          <h3><a class="posttitle" href="javascript:void(0)">{{item.title}}</a></h3>
+          <h3 class="posttitle" @click="goDetails(item._id)">{{item.title}}</h3>
           <p class="content-wrapper" v-text="item.excerpt"></p>
       </div>
   </div>
@@ -19,7 +19,11 @@ export default {
   name: 'Post',
   props:['postLists'],
   methods:{
-  
+    goDetails(id) {
+      this.$router.push({
+        path:`/${id}`
+      })
+    }
   }
 }
 </script>
@@ -31,5 +35,8 @@ export default {
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
   overflow: hidden;
+}
+.posttitle{
+  cursor: pointer;
 }
 </style>
