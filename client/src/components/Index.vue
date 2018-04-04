@@ -29,7 +29,7 @@
             <div id="post0">
                 <p>{{moment(topLine.lastEditTime).format('MMMM Do YYYY')}}</p>
                 <h2><a class="posttitle" href="javascript:void(0)">{{topLine.title}}</a></h2>
-                <p class="p-content">{{topLine.content}}</p>
+                <p class="p-content">{{topLine.excerpt}}</p>
             </div>
         </div>
         

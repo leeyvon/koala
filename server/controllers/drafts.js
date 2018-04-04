@@ -8,7 +8,12 @@ module.exports = {
     const lastEditTime = new Date();
     const published = false;
     const post = null;
+    let excerpt;
     !title && ctx.throw(400, "Title Required");
+    if (content) {
+      const contentArr = content.split("<!-- more -->");
+      excerpt = contentArr.length > 1 ? contentArr[0] : "";
+    }
     let draft = new Draft({
       title,
       createTime,
@@ -16,7 +21,8 @@ module.exports = {
       published,
       content,
       imageSrc,
-      post
+      post,
+      excerpt
     });
     await draft.save().catch(err => {
       throw new Error("token saved failed");

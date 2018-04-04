@@ -6,9 +6,13 @@ module.exports = {
     const draftArr = await Post.find(findOpt)
       .sort("_id")
       .exec();
+    let resultArr = draftArr.map((obj)=>{
+        obj.content = undefined;
+        return obj;
+    })
     ctx.body = {
       success: true,
-      data: draftArr.reverse()
+      data: resultArr.reverse()
     };
   },
   async postDetail(ctx, next) {

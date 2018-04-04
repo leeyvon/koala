@@ -7,7 +7,7 @@
       <div class="else">
           <p>{{moment(item.lastEditTime).format('MMMM Do YYYY')}}</p>
           <h3><a class="posttitle" href="javascript:void(0)">{{item.title}}</a></h3>
-          <p class="content-wrapper" v-text="item.content"></p>
+          <p class="content-wrapper" v-text="item.excerpt"></p>
       </div>
   </div>
 </div>
