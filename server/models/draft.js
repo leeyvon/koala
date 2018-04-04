@@ -15,7 +15,8 @@ const draftSchema = new mongoose.Schema({
   post: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "post"
-  }
+  },
+  excerpt:String
 });
 
 module.exports = mongoose.model("draft", draftSchema);

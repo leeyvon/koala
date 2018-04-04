@@ -653,14 +653,6 @@ h1.title {
     position: relative;
     font-weight: bold;
 }
-.content:before {
-    content: '';
-    height: 1px;
-    width: 100px;
-    background: #eee;
-    display: block;
-    margin: 30px auto 40px;
-}
 .page .content:before {
     display: none;
 }

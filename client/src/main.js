@@ -4,8 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import './assets/diaspora.css'
+import moment from 'moment'
+
 Vue.config.productionTip = false
 
+moment.locale('zh-cn');
+Vue.prototype.moment = moment
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

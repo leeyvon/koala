@@ -1,4 +1,10 @@
 <template>
+<div>
+    <div class="nav">
+        <ul id="menu-menu" class="menu">
+            <li>文章归档</li>
+        </ul>
+    </div>
     <div id="container">
         <div id="screen">
             <div id="mark">
@@ -17,31 +23,25 @@
             <div id="header">
             <div>
                 <!-- <a class="<?php if (LOGO_FONT) { echo 'icon-logo'; } else { echo 'image-logo'; } ?>" href="/"></a> -->
-                <div class="icon-menu switchmenu"></div>
+                <div @click="toggleMenu" class="icon-menu switchmenu"></div>
             </div>
             </div>
             <div id="post0">
-                <p>三月</p>
-                <h2><a class="posttitle" href="javascript:void(0)">要么孤独，要么庸俗</a></h2>
-                <p>刷朋友圈的时候，看到一条由三感音乐故事拍摄的短视频，被文案戳中了泪点。 22岁生日，一个人吃火</p>
+                <p>{{moment(topLine.lastEditTime).format('MMMM Do YYYY')}}</p>
+                <h2><a class="posttitle" href="javascript:void(0)">{{topLine.title}}</a></h2>
+                <p class="p-content">{{topLine.content}}</p>
             </div>
         </div>
-
-        <div style="display: none;">
-        </div>
-
+        
         <div id="primary">
-        <Posts/>
-        <Posts/>
+            <Posts :postLists="list"></Posts>
         </div>
-
-        <div id="pager"></div>
-
-        <div id="preview" class="trans"></div>
     </div>
+</div>
 </template>
 
 <script>
+import axios from 'axios';
 import Posts from '@/components/Posts'
 export default {
   name: 'index',
@@ -50,10 +50,12 @@ export default {
     this.resize();
     var scene = document.getElementById('mark');
     var parallaxInstance = new Parallax(scene); 
+    this.getList();
   },
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App'
+      topLine:'',
+      list:[]
     }
   },
   methods:{
@@ -124,6 +126,18 @@ export default {
             if (swatches['Vibrant']) {
                 $('.icon-menu').css('color', swatches['Vibrant'].getHex())
             }
+        },
+        toggleMenu() {
+            $('html, body').toggleClass('mu');
+        },
+        getList(){
+            axios.get('/api/posts').then((response)=>{
+                let res = response.data;
+                if(res.success){
+                    this.list = res.data.slice(1);
+                    this.topLine = res.data[0];
+                }
+            })
         }
   },
   components:{
@@ -132,7 +146,11 @@ export default {
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+#post0 .p-content{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+}
 </style>

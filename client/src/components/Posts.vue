@@ -1,29 +1,35 @@
 <template>
-<div class="post">
-    
-    <a data-id="<?php the_ID() ?>" href="<?php the_permalink(); ?>" title="<?php the_title(); ?>">
-        <img width="680" height="440" src="./../assets/timthumb01.jpeg" class="cover" />
-    </a>
-    <div class="else">
-        <p>十二月 18, 2017</p>
-        <h3><a class="posttitle" href="javascript:void(0)">我们都曾畏惧告别</a></h3>
-        <p>我实际上是个十分口拙的人。而且，特别是在关键时刻尤为口拙。比如告别。 告别似乎是一个普遍公认的隆...</p>
-    </div>
+<div>
+  <div class="post" v-for="item in postLists" :key="item.id">
+      <a>
+          <img style="width:680;height:440px;" :src="item.imageSrc" class="cover" />
+      </a>
+      <div class="else">
+          <p>{{moment(item.lastEditTime).format('MMMM Do YYYY')}}</p>
+          <h3><a class="posttitle" href="javascript:void(0)">{{item.title}}</a></h3>
+          <p class="content-wrapper" v-text="item.content"></p>
+      </div>
+  </div>
 </div>
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'Post',
-  data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
+  props:['postLists'],
+  methods:{
+  
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+.content-wrapper{
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
 </style>
