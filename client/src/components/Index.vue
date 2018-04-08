@@ -1,5 +1,5 @@
 <template>
-<div>
+<div style="background:#fff;">
     <div class="nav">
         <ul id="menu-menu" class="menu">
             <li>文章归档</li>
@@ -136,6 +136,7 @@ export default {
                     this.list = res.data.slice(1);
                     this.topLine = res.data[0];
                 }
+                this.loaded();
             })
         },
         goDetails(id) {

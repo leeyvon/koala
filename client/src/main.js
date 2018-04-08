@@ -15,6 +15,7 @@ moment.locale('zh-cn');
 Vue.prototype.moment = moment
 Vue.prototype.markdown= markdown;
 /* eslint-disable no-new */
+$('body').removeClass('loading');
 new Vue({
   el: '#app',
   router,
