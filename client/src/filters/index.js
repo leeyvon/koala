@@ -37,11 +37,8 @@ marked.setOptions({
   breaks: true,
   smartLists: true,
   smartypants: true,
-  highlight: function (code,lang) {
-    if(!~languages.indexOf(lang)){
-      return highlight.highlightAuto(code).value;
-    }
-    return highlight.highlight(lang,code).value;
+  highlight: function (code) { 
+    return highlight.highlightAuto(code).value;
   }
 });
 

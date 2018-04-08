@@ -8,7 +8,7 @@ pre {
 
 pre .function .keyword,
 pre .constant {
-	color: #0092db;
+	color: #c46fd4;
 }
 
 pre .keyword,
@@ -21,8 +21,15 @@ pre .literal {
 	color: #ae81ff;
 }
 
-pre .tag,
-pre .tag .title,
+pre .tag{
+    color: #aaadb6;
+}
+pre .tag .name{
+    color: #dd6976;
+}
+pre .tag .attr{
+    color:#d29964;
+}
 pre .change,
 pre .winutils,
 pre .flow,
@@ -45,7 +52,7 @@ pre .regexp {
 }
 
 pre .title {
-	color: #a6e22e;
+	color: #5da4d2;
 }
 
 pre .tag .value,
@@ -72,7 +79,7 @@ pre .apache .tag,
 pre .apache .cbracket,
 pre .tex .command,
 pre .prompt {
-	color: #42b983;
+	color: #8cb059;
 }
 
 pre .comment,
