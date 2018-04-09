@@ -28,7 +28,7 @@
             <div id="post0">
                 <p>{{moment(topLine.lastEditTime).format('MMMM Do YYYY')}}</p>
                 <h2 class="posttitle" @click="goDetails(topLine._id)">{{topLine.title}}</h2>
-                <p class="p-content">{{topLine.excerpt}}</p>
+                <p class="p-content" v-text="topLine.excerpt"></p>
             </div>
         </div>
         
