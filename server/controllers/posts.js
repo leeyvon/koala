@@ -3,13 +3,10 @@ let Post = require("./../models/post");
 module.exports = {
   async postList(ctx, next) {
     let findOpt = {};
-    const draftArr = await Post.find(findOpt)
+    const resultArr = await Post.find(findOpt)
       .sort("_id")
+      .select({content:0})
       .exec();
-    let resultArr = draftArr.map((obj)=>{
-        obj.content = undefined;
-        return obj;
-    })
     ctx.body = {
       success: true,
       data: resultArr.reverse()

@@ -2,7 +2,7 @@
 <div style="background:#fff;">
     <div class="nav">
         <ul id="menu-menu" class="menu">
-            <li>文章归档</li>
+            <li @click="goArchieve">文章归档</li>
         </ul>
     </div>
     <div id="container">
@@ -136,12 +136,16 @@ export default {
                     this.list = res.data.slice(1);
                     this.topLine = res.data[0];
                 }
-                this.loaded();
             })
         },
         goDetails(id) {
             this.$router.push({
                 path:`/${id}`
+            })
+        },
+        goArchieve() {
+            this.$router.push({
+                path:'/archieve'
             })
         }
   },
@@ -160,6 +164,9 @@ export default {
 }
 .posttitle{
     color: #fff;
+    cursor: pointer;
+}
+.menu li{
     cursor: pointer;
 }
 </style>

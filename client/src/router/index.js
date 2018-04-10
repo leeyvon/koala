@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/components/Index'
 import Details from '@/components/Details'
-
+import Archieve from '@/components/Archieve'
 Vue.use(Router)
 
 export default new Router({
@@ -12,6 +12,11 @@ export default new Router({
       path: '/',
       name: 'Index',
       component: Index
+    },
+    {
+      path: '/archieve',
+      name: 'Archieve',
+      component: Archieve
     },
     {
       path: '/:id',

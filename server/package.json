@@ -25,6 +25,7 @@
     "pug": "^2.0.0-rc.1"
   },
   "devDependencies": {
+    "lodash": "^4.17.5",
     "nodemon": "^1.8.1"
   }
 }

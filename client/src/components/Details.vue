@@ -21,6 +21,7 @@ import './../assets/icon/iconfont.css';
 export default {
   mounted() {
       this.getArticle();
+      $(window).scrollTop(0);
   },
   data () {
     return {
@@ -48,6 +49,7 @@ export default {
 .details{
     padding: 40px 10% 20px;
     background: #e5e5e5;
+    min-height: 100%;
 }
 .article-wrapper{
     background: #fff;
