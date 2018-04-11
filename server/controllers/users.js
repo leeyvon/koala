@@ -2,6 +2,28 @@ let User = require("./../models/user");
 const base = require("./../token");
 const jwt = require("jsonwebtoken");
 
+async function seed() {
+  let user = await User.find().exec().catch(err => {
+    throw new Error('Data seed failed');
+  });
+  if (!user.length){
+    user = new User({
+      name: 'leeyvon',
+      username: 'leeyvon',
+      password: 'lyf123456',
+      avatar: '',
+      createTime: new Date()
+    })
+    console.log('成功');
+    await user.save().exec().catch(err => {
+      utils.logger.error(err)
+      throw new Error('Data seed failed')
+    })
+  }
+}
+
+seed();
+
 module.exports = {
   async login(ctx, next) {
     const { username, password } = ctx.request.body;
@@ -17,11 +39,6 @@ module.exports = {
       }
       let token = base.createToken(user);
       user.token = token;
-      console.log(token);
-      console.log(jwt.decode(token, "leeyvon"));
-      // await user.save().catch(err =>{
-      //     throw new Error('token saved failed');
-      // })
       ctx.body = {
         status: "0",
         msg: "登陆成功！",
